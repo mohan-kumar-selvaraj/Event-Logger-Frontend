@@ -3,25 +3,31 @@
 <table>
     <thead>
         <tr>
-            <th>Time Created</th>
-            <th>Provider Name</th>
-            <th>Task Display Name</th>
+            <th>EventCode</th>
+            <th>SourceName</th>
             <th>Message</th>
-            <th>User ID</th>
+            {{!-- <th>Time Created</th>
+            <th>Provider Name</th>
+            <th>Task Display Name</th> --}}
+            {{!-- <th>Message</th> --}}
+            {{!-- <th>User ID</th>
             <th>ID</th>
-            <th>Level</th>
+            <th>Level</th> --}}
         </tr>
     </thead>
     <tbody>
         {{#each this.model as |log|}}
         <tr>
-            <td>{{format-date log.TimeCreated}}</td>
-            <td>{{log.ProviderName}}</td>
-            <td>{{log.TaskDisplayName}}</td>
+            <td>{{log.EventCode}}</td>
+            <td>{{log.SourceName}}</td>
             <td>{{log.Message}}</td>
-            <td>{{log.UserId}}</td>
-            <td>{{log.Id}}</td>
-            <td>{{log.LevelDisplayName}}</td>
+            {{!-- <td>{{format-date log.TimeCreated}}</td> --}}
+            {{!-- <td>{{log.ProviderName}}</td> --}}
+            {{!-- <td>{{log.TaskDisplayName}}</td> --}}
+            {{!-- <td>{{log.Message}}</td> --}}
+            {{!-- <td>{{log.UserId}}</td> --}}
+            {{!-- <td>{{log.Id}}</td> --}}
+            {{!-- <td>{{log.LevelDisplayName}}</td> --}}
         </tr>
         {{/each}}
     </tbody>
