@@ -20,17 +20,17 @@
 </table>
 <br>
 
-<!-- Pagination controls -->
+{{!-- Pagination controls --}}
 <div>
     {{!-- Check if model and totalPages are defined --}}
     {{#if this.model}}
     {{#if this.model.totalPages}}
 
-    <button {{on "click" this.previousPage}}>Previous</button>
+    <button type="button" {{on "click" this.previousPage}}>Previous</button>
 
     {{this.page}}
 
-    <button {{on "click" this.nextPage}}>Next</button>
+    <button type="button" {{on "click" this.nextPage}}>Next</button>
 
     {{/if}}
     {{/if}}

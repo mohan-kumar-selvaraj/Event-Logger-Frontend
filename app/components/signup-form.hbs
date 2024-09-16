@@ -1,13 +1,15 @@
 <div class="card">
-    <h1>Login</h1>
+    <h1>Signup</h1>
     <input class="text-field" placeholder="Enter Email" type="text" value={{this.username}} {{on "input"
         this.updateUsername}} />
     <input class="text-field" placeholder="Enter Password" type="password" value={{this.password}} {{on "input"
         this.updatePassword}} />
+    <input class="text-field" placeholder="Re-Enter Password" type="password" value={{this.re_password}} {{on "input"
+        this.updateRePassword}} />
     <p>
-        Don't have an account?
+        Already have an account?
         {{!-- Ember's link-to helper to navigate to signup route --}}
-        <a href="" {{on "click" (fn this.transitionToSignup)}}>Create an account</a>
+        <a href="" {{on "click" (fn this.transitionToLogin)}}>click here</a>
     </p>
-    <button class="button" type="button" {{on "click" this.login}}>Login</button>
+    <button class="button" type="button" {{on "click" this.signup}}>Signup</button>
 </div>

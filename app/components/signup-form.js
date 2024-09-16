@@ -3,12 +3,13 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service'; // Correct import for router service
 
-export default class LoginFormComponent extends Component {
+export default class SignupFormComponent extends Component {
 
     @service router; // Ensure this is correctly injected
 
     @tracked username = '';
     @tracked password = '';
+    @tracked re_password = '';
 
     @action
     updateUsername(event) {
@@ -21,14 +22,20 @@ export default class LoginFormComponent extends Component {
     }
 
     @action
-    login() {
-        alert(`Username: ${this.username}\nPassword: ${this.password}`);
-        this.username = '';
-        this.password = '';
+    updateRePassword(event) {
+        this.re_password = event.target.value;
     }
 
     @action
-    transitionToSignup() {
-        this.router.transitionTo('signup');
+    signup() {
+        alert(`Username: ${this.username}\nPassword: ${this.password}\nRe-Password: ${this.re_password}`);
+        this.username = '';
+        this.password = '';
+        this.re_password = '';
+    }
+
+    @action
+    transitionToLogin() {
+        this.router.transitionTo('login');
     }
 }
