@@ -27,6 +27,18 @@ export default class SignupFormComponent extends Component {
 
     @action
     async signup() {
+        if (this.email == "") {
+            alert("Email cannot be empty!!");
+            return;
+        }
+        if (this.password == "") {
+            alert("Password cannot be empty!!");
+            return;
+        }
+        if (this.re_password == "") {
+            alert("Re-Enter Password cannot be empty!!");
+            return;
+        }
         if (this.password !== this.re_password) {
             alert('Passwords do not match.');
             return;
