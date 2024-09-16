@@ -4,16 +4,15 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service'; // Correct import for router service
 
 export default class SignupFormComponent extends Component {
-
     @service router; // Ensure this is correctly injected
 
-    @tracked username = '';
+    @tracked email = '';
     @tracked password = '';
     @tracked re_password = '';
 
     @action
-    updateUsername(event) {
-        this.username = event.target.value;
+    updateEmail(event) {
+        this.email = event.target.value;
     }
 
     @action
@@ -27,9 +26,64 @@ export default class SignupFormComponent extends Component {
     }
 
     @action
-    signup() {
-        alert(`Username: ${this.username}\nPassword: ${this.password}\nRe-Password: ${this.re_password}`);
-        this.username = '';
+    async signup() {
+        if (this.password !== this.re_password) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        const url = "http://localhost:8080/EventLogJNI/checkuser";
+
+        const bodyData = {
+            email: this.email, // Using email now
+            password: this.password,
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bodyData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const jsonResponse = await response.json();
+            console.log('Success:', jsonResponse);
+
+            if (jsonResponse.email === true) {
+                // User already exists
+                alert("User already exists");
+            } else {
+                // Proceed to create a new user
+                const createUserUrl = "http://localhost:8080/EventLogJNI/createuser";
+                const createUserResponse = await fetch(createUserUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bodyData),
+                });
+
+                const createUserJson = await createUserResponse.json();
+
+                if (createUserJson.status === true) {
+                    alert(createUserJson.message);
+                } else {
+                    alert(createUserJson.message);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        // Clear form fields after successful or failed signup
+        this.email = '';
         this.password = '';
         this.re_password = '';
     }
