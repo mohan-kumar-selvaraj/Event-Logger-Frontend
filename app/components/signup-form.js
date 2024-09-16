@@ -36,6 +36,6 @@ export default class SignupFormComponent extends Component {
 
     @action
     transitionToLogin() {
-        this.router.transitionTo('login');
+        this.router.replaceWith('login');
     }
 }
