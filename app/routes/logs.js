@@ -7,7 +7,7 @@ export default class LogsRoute extends Route {
 
   async beforeModel() {
     try {
-      let response = await fetch('http://localhost:8080/EventLogJNI/auth-check', {
+      let response = await fetch('/EventLogJNI/auth-check', {
         method: 'GET',
         credentials: 'include',
       });
@@ -36,7 +36,7 @@ export default class LogsRoute extends Route {
 
     try {
       let response = await fetch(
-        `http://localhost:8080/EventLogJNI/json?page=${page}&pageSize=${pageSize}`,
+        `/EventLogJNI/json?page=${page}&pageSize=${pageSize}`,
         {
           method: 'GET',
           credentials: 'include', // Send cookies or session info

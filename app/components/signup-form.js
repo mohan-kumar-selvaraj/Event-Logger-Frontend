@@ -44,7 +44,7 @@ export default class SignupFormComponent extends Component {
             return;
         }
 
-        const url = "http://localhost:8080/EventLogJNI/checkuser";
+        const url = "/EventLogJNI/checkuser";
 
         const bodyData = {
             email: this.email, // Using email now
@@ -64,7 +64,7 @@ export default class SignupFormComponent extends Component {
                 // User not found or unauthorized, attempt to create a new user
 
                 try {
-                    const createUserUrl = "http://localhost:8080/EventLogJNI/createuser";
+                    const createUserUrl = "/EventLogJNI/createuser";
                     const createUserResponse = await fetch(createUserUrl, {
                         method: 'POST',
                         headers: {

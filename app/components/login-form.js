@@ -32,7 +32,7 @@ export default class LoginFormComponent extends Component {
             return;
         }
 
-        const url = "http://localhost:8080/EventLogJNI/checkuser";
+        const url = "/EventLogJNI/checkuser";
 
         const bodyData = {
             email: this.email,
