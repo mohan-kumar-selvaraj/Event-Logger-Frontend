@@ -6,13 +6,25 @@ export default class LogsRoute extends Route {
   @service session;
   @service router;
 
-  beforeModel() {
-    if (!this.session.isAuthenticated) {
-      // Redirect to login if the user is not authenticated
-      alert("Authentication failed");
+  async beforeModel() {
+    try {
+      let response = await fetch('http://localhost:8080/EventLogJNI/auth-check', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      let authStatus = await response.json();
+
+      if (!authStatus.isAuthenticated) {
+        alert("Session Timeout")
+        this.router.replaceWith('login');
+      }
+    } catch (error) {
+      console.error("Error during authentication check:", error);
       this.router.replaceWith('login');
     }
   }
+
 
   queryParams = {
     page: { refreshModel: true },
