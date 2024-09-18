@@ -60,35 +60,44 @@ export default class SignupFormComponent extends Component {
                 body: JSON.stringify(bodyData),
             });
 
-            if (!response.ok) {
+            if (response.status === 401) {
+                // User not found or unauthorized, attempt to create a new user
+
+                try {
+                    const createUserUrl = "http://localhost:8080/EventLogJNI/createuser";
+                    const createUserResponse = await fetch(createUserUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(bodyData),
+                    });
+
+                    const createUserJson = await createUserResponse.json();
+
+                    if (createUserJson.status === true) {
+                        alert(createUserJson.message);
+                    } else {
+                        alert(createUserJson.message);
+                    }
+                } catch (error) {
+                    console.log(error);
+
+                }
+                // Clear form fields after successful or failed signup
+                this.email = '';
+                this.password = '';
+                this.re_password = '';
+                return;
+
+            } else if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const jsonResponse = await response.json();
             console.log('Success:', jsonResponse);
 
-            if (jsonResponse.email === true) {
-                // User already exists
-                alert("User already exists");
-            } else {
-                // Proceed to create a new user
-                const createUserUrl = "http://localhost:8080/EventLogJNI/createuser";
-                const createUserResponse = await fetch(createUserUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(bodyData),
-                });
-
-                const createUserJson = await createUserResponse.json();
-
-                if (createUserJson.status === true) {
-                    alert(createUserJson.message);
-                } else {
-                    alert(createUserJson.message);
-                }
-            }
+            alert("User already exists");
 
         } catch (error) {
             console.error('Error:', error);
