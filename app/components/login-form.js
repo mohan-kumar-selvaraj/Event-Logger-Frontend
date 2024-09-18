@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service'; // Correct import for router
 export default class LoginFormComponent extends Component {
 
     @service router; // Ensure this is correctly injected
+    @service session;  // Inject the session service to manage session
 
     @tracked email = '';
     @tracked password = '';
@@ -22,11 +23,11 @@ export default class LoginFormComponent extends Component {
 
     @action
     async login() {
-        if (this.email == "") {
+        if (this.email === "") {
             alert("Email cannot be empty!!");
             return;
         }
-        if (this.password == "") {
+        if (this.password === "") {
             alert("Password cannot be empty!!");
             return;
         }
@@ -44,6 +45,7 @@ export default class LoginFormComponent extends Component {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',  // Important for sending and receiving cookies
                 body: JSON.stringify(bodyData),
             });
 
@@ -54,28 +56,60 @@ export default class LoginFormComponent extends Component {
             const jsonResponse = await response.json();
             console.log('Success:', jsonResponse);
 
-            if (jsonResponse.email === true) {
-                // User already exists
-                if (jsonResponse.password === true) {
-                    alert("User already exists");
-                    this.router.replaceWith('logs');
-                } else {
-                    alert("Password mismatch!!");
-                    return;
-                }
+            // Check if user is authenticated based on the backend response
+            if (jsonResponse.authenticated === true) {
+                // If authentication is successful, store the session in Ember's session service
+                this.session.set('isAuthenticated', true);
+                this.session.set('userEmail', this.email);
+                this.session.set('user', this.email);
+
+                // Redirect to the logs route
+                this.router.replaceWith('logs');
+
+                // Set a timer to automatically log out after 15 minutes (900,000 milliseconds)
+                setTimeout(() => {
+                    this.logout();
+                }, 15 * 60 * 1000);  // 15 minutes
+            } else if (jsonResponse.passwordMismatch) {
+                alert("Password mismatch!!");
+                return;
             } else {
-                // Proceed to create a new user
                 alert("User not found!! Create an account!!");
                 return;
             }
 
         } catch (error) {
             console.error('Error:', error);
+            alert("Auhentication Failed!!");
         }
 
-        // alert(`email: ${this.email}\nPassword: ${this.password}`);
+        // Clear the form
         this.email = '';
         this.password = '';
+    }
+
+    @action
+    logout() {
+        // Call the backend to clear the session
+        fetch('http://localhost:8080/EventLogJNI/logout', {
+            method: 'POST',
+            credentials: 'include',  // This ensures cookies or session info are sent
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Logout failed');
+                }
+                // Clear session on frontend
+                this.session.set('isAuthenticated', false);
+                this.session.set('userEmail', null);
+
+                // Redirect to the login route
+                this.router.replaceWith('login');
+                alert('You have been logged out.');
+            })
+            .catch((error) => {
+                console.error('Error during logout:', error);
+            });
     }
 
     @action
