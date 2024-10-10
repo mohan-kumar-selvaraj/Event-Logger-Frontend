@@ -1,0 +1,14 @@
+<!-- Search Form -->
+<div>
+  <label for="searchType">Filter by: </label>
+  <select id="searchType" {{on "change" this.updateType}}>
+    <option value="EventCode">Event Code</option>
+    <option value="SourceName">Source Name</option>
+    <option value="Message">Message</option>
+    <option value="Severity">Severity</option>
+  </select>
+
+  <input id="searchValue" type="text" placeholder="Enter value" {{on "input" this.updateValue}} />
+
+  <button class="button" type="button" {{on "click" this.searchLogs}}>Search</button>
+</div>

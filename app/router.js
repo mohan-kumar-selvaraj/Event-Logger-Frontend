@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('login');
   this.route('logs');
   this.route('signup');
+  this.route('filter-page');
 });
