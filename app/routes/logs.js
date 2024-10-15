@@ -25,10 +25,10 @@ export default class LogsRoute extends Route {
   }
 
 
-  queryParams = {
-    page: { refreshModel: true },
-    pageSize: { refreshModel: true },
-  };
+  // queryParams = {
+  //   page: { refreshModel: true },
+  //   pageSize: { refreshModel: true },
+  // };
 
   async model(params) {
     let page = params.page || 1;

@@ -1,5 +1,25 @@
 <h2>System Logs</h2>
 
+<div>
+    {{#each this.filters as |filter index|}}
+        <FilterForm 
+            @type={{filter.type}} 
+            @value={{filter.value}} 
+            @updateFilterLogic={{this.updateFilterLogic}} 
+            @updateType={{this.updateFilterType}} 
+            @updateValue={{this.updateFilterValue}} 
+            @index={{index}} 
+            @removeFilter={{this.removeFilter}} 
+        />
+        <br>
+    {{/each}}
+    
+    <button class="button" type="button" {{on "click" this.addFilter}}>Add Filter</button>
+    <button class="button" type="button" {{on "click" (fn this.searchLogs true)}}>Search Logs</button>
+</div>
+
+<!-- Search button to send filters to the backend -->
+
 <table>
     <thead>
         <tr>
@@ -12,10 +32,10 @@
     <tbody>
         {{#each this.model.logs as |log|}}
         <tr>
-            <td>{{log.EventCode}}</td>
-            <td>{{log.SourceName}}</td>
-            <td>{{log.Message}}</td>
-            <td>{{log.Severity}}</td>
+            <td>{{log.eventID}}</td>
+            <td>{{log.sourceName}}</td>
+            <td>{{log.message}}</td>
+            <td>{{log.severity}}</td>
         </tr>
         {{/each}}
     </tbody>

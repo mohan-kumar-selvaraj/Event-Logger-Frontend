@@ -1,34 +1,30 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
 
 export default class FilterFormComponent extends Component {
 
-    @tracked type = '';
-    @tracked value = '';
+    @action
+    updateFilterLogic(event) {
+        this.args.updateFilterLogic(event, this.args.index); // Pass index to update the correct filter
+    }
 
-    @service router; // Inject router service to transition to routes
 
+    // Handle type update and pass it to the parent component (LogsController)
     @action
     updateType(event) {
-        this.type = event.target.value;
+        this.args.updateType(event, this.args.index); // Pass index to update the correct filter
     }
 
+    // Handle value update and pass it to the parent component (LogsController)
     @action
     updateValue(event) {
-        this.value = event.target.value;
+        this.args.updateValue(event, this.args.index); // Pass index to update the correct filter
     }
 
+    // Remove filter and trigger action from the parent controller
     @action
-    async searchLogs() {
-        // Transition to the logs route with query params
-        this.router.transitionTo('logs', {
-            queryParams: {
-            type: this.type,
-            value: this.value,
-            page: 1, // Reset to the first page when a new search is performed
-            },
-        });
+    removeFilter() {
+        this.args.removeFilter(this.args.index); // Call remove action with the index
     }
+    
 }
