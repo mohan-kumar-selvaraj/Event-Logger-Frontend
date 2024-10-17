@@ -18,15 +18,39 @@
     <button class="button" type="button" {{on "click" (fn this.searchLogs true)}}>Search Logs</button>
 </div>
 
-<!-- Search button to send filters to the backend -->
+<br>
+
+<div class="center-screen">
+    <div class="left-screen">
+        {{#if this.model}}
+            <p>No of Records : {{this.model.logs.length}}</p>
+            <p>Total Pages : {{this.model.totalPages}}</p>
+        {{/if}}
+    </div>
+    <div class="right-screen">
+        {{#if this.model}}
+        {{#if this.model.totalPages}}
+
+            <button class="button" type="button" {{on "click" this.previousPage}}>Previous</button>
+
+            {{this.page}}
+
+            <button class="button" type="button" {{on "click" this.nextPage}}>Next</button>
+
+        {{/if}}
+        {{/if}}
+    </div>
+</div>
+
+<br>
 
 <table>
     <thead>
         <tr>
-            <th>EventID</th>
-            <th>SourceName</th>
-            <th>Message</th>
-            <th>Severity</th>
+            <th>EventID <img src="/assets/swap.png" class="swap" alt="Sort EventID" {{on "click" (fn this.setSortColumn 'eventID')}} /></th>
+            <th>SourceName <img src="/assets/swap.png" class="swap" alt="Sort SourceName" {{on "click" (fn this.setSortColumn 'sourceName')}} /></th>
+            <th>Message <img src="/assets/swap.png" class="swap" alt="Sort Message" {{on "click" (fn this.setSortColumn 'message')}} /></th>
+            <th>Severity <img src="/assets/swap.png" class="swap" alt="Sort Severity" {{on "click" (fn this.setSortColumn 'severity')}} /></th>
         </tr>
     </thead>
     <tbody>
@@ -40,20 +64,3 @@
         {{/each}}
     </tbody>
 </table>
-<br>
-
-{{!-- Pagination controls --}}
-<div>
-    {{!-- Check if model and totalPages are defined --}}
-    {{#if this.model}}
-    {{#if this.model.totalPages}}
-
-    <button class="button" type="button" {{on "click" this.previousPage}}>Previous</button>
-
-    {{this.page}}
-
-    <button class="button" type="button" {{on "click" this.nextPage}}>Next</button>
-
-    {{/if}}
-    {{/if}}
-</div>

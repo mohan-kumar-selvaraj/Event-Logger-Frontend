@@ -5,7 +5,8 @@ import { tracked } from '@glimmer/tracking';
 export default class LogsController extends Controller {
   // queryParams = ['page', 'pageSize'];
   page = 1; // Default page number
-  pageSize = 10; // Default page size
+  pageSize = 1000; // Default page size
+  sortColumn = "";
 
   @tracked filters = [{ type: '', value: '', logic : '' }]; // Initial filter array
 
@@ -47,10 +48,12 @@ export default class LogsController extends Controller {
 
   @action
   async searchLogs(flag=false) {
+    
     if(flag) this.page = 1
     const payload = {
       page: this.page,
       pageSize: this.pageSize,
+      sortColumn : this.sortColumn,
       filters: this.filters // Send the filters array as part of the payload
     };
 
@@ -94,5 +97,11 @@ export default class LogsController extends Controller {
       this.incrementProperty('page');
       this.searchLogs()
     }
+  }
+
+  @action
+  setSortColumn(column) {
+      this.sortColumn = column;
+      this.searchLogs(true);
   }
 }

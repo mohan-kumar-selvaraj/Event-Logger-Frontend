@@ -32,7 +32,7 @@ export default class LogsRoute extends Route {
 
   async model(params) {
     let page = params.page || 1;
-    let pageSize = params.pageSize || 10;
+    let pageSize = params.pageSize || 1000;
 
     try {
       let response = await fetch(
