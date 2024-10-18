@@ -33,7 +33,7 @@
 
             <button class="button" type="button" {{on "click" this.previousPage}}>Previous</button>
 
-            {{this.page}}
+            <input type="text" value="{{this.page}}" {{on "input" this.updatePageNumber}}/>
 
             <button class="button" type="button" {{on "click" this.nextPage}}>Next</button>
 
