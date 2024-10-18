@@ -49,8 +49,8 @@ export default class LogsController extends Controller {
   @action
   async searchLogs(flag=false) {
     
-    if(this.page == "") this.page = 1
-    if(this.pageSize == "") this.pageSize = 10
+    if(this.page == "" || this.page == 0) this.page = 1
+    if(this.pageSize == "" || this.pageSize == 0) this.pageSize = 10
 
     if(flag) this.page = 1
     const payload = {

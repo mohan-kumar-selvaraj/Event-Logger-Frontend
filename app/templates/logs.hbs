@@ -51,6 +51,10 @@
             <th>SourceName <img src="/assets/swap.png" class="swap" alt="Sort SourceName" {{on "click" (fn this.setSortColumn 'sourceName')}} /></th>
             <th>Message <img src="/assets/swap.png" class="swap" alt="Sort Message" {{on "click" (fn this.setSortColumn 'message')}} /></th>
             <th>Severity <img src="/assets/swap.png" class="swap" alt="Sort Severity" {{on "click" (fn this.setSortColumn 'severity')}} /></th>
+            <th>TimeStamp</th>
+            <th>LogName</th>
+            <th>UserName</th>
+            <th>DeviceName</th>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +64,10 @@
             <td>{{log.sourceName}}</td>
             <td>{{log.message}}</td>
             <td>{{log.severity}}</td>
+            <td>{{log.timeStamp}}</td>
+            <td>{{log.logName}}</td>
+            <td>{{log.userName}}</td>
+            <td>{{log.logName}}</td>
         </tr>
         {{/each}}
     </tbody>
