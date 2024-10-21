@@ -47,6 +47,7 @@
 <table>
     <thead>
         <tr>
+            <th>SNo</th>
             <th>EventID <img src="/assets/swap.png" class="swap" alt="Sort EventID" {{on "click" (fn this.setSortColumn 'eventID')}} /></th>
             <th>SourceName <img src="/assets/swap.png" class="swap" alt="Sort SourceName" {{on "click" (fn this.setSortColumn 'sourceName')}} /></th>
             <th>Message <img src="/assets/swap.png" class="swap" alt="Sort Message" {{on "click" (fn this.setSortColumn 'message')}} /></th>
@@ -59,6 +60,7 @@
     <tbody>
         {{#each this.model.logs as |log|}}
         <tr>
+            <td>{{log.SNO}}</td>
             <td>{{log.eventID}}</td>
             <td>{{log.sourceName}}</td>
             <td>{{log.message}}</td>

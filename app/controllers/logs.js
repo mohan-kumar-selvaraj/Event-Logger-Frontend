@@ -83,6 +83,13 @@ export default class LogsController extends Controller {
 
       const data = await response.json(); // Parse JSON response
 
+      data.logs = data.logs.map((log, index) => {
+        return {
+          ...log, 
+          SNO: (this.page * this.pageSize) + index + 1 
+        };
+      });
+
       console.log(data);
       
 

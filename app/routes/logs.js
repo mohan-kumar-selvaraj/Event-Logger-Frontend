@@ -52,6 +52,17 @@ export default class LogsRoute extends Route {
       }
 
       let data = await response.json();
+
+      
+      
+      data.logs = data.logs.map((log, index) => {
+        return {
+          ...log, 
+          SNO: index + 1 
+        };
+      });
+      
+      console.log(data);
       return {
         logs: data.logs,
         totalPages: data.totalPages,
