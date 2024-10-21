@@ -15,15 +15,14 @@ export default class LogsRoute extends Route {
       let authStatus = await response.json();
 
       if (!authStatus.isAuthenticated) {
-        alert("Session Timeout")
+        alert('Session Timeout');
         this.router.replaceWith('login');
       }
     } catch (error) {
-      console.error("Error during authentication check:", error);
+      console.error('Error during authentication check:', error);
       this.router.replaceWith('login');
     }
   }
-
 
   // queryParams = {
   //   page: { refreshModel: true },
@@ -40,7 +39,7 @@ export default class LogsRoute extends Route {
         {
           method: 'GET',
           credentials: 'include', // Send cookies or session info
-        }
+        },
       );
 
       if (!response.ok) {
@@ -53,21 +52,18 @@ export default class LogsRoute extends Route {
 
       let data = await response.json();
 
-      
-      
       data.logs = data.logs.map((log, index) => {
         return {
-          ...log, 
-          SNO: index + 1 
+          ...log,
+          SNO: index + 1,
         };
       });
-      
+
       console.log(data);
       return {
         logs: data.logs,
         totalPages: data.totalPages,
       };
-
     } catch (error) {
       console.error('Error fetching logs:', error);
     }

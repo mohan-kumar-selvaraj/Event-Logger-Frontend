@@ -6,45 +6,48 @@ export default class LogsController extends Controller {
   // queryParams = ['page', 'pageSize'];
   page = 1; // Default page number
   pageSize = 10; // Default page size
-  sortColumn = "";
+  sortColumn = '';
 
-  @tracked filters = [{ type: '', value: '', logic : '', filterType : '' }]; // Initial filter array
+  @tracked filters = [{ type: '', value: '', logic: '', filterType: '' }]; // Initial filter array
 
   // Add a new empty filter
   @action
   addFilter() {
-      this.filters = [...this.filters, { type: '', value: '', logic : '', filterType : '' }];
+    this.filters = [
+      ...this.filters,
+      { type: '', value: '', logic: '', filterType: '' },
+    ];
   }
 
   // Update the filter type
   @action
   updateFilterLogic(event, index) {
-      let filtersCopy = [...this.filters];
-      filtersCopy[index].logic = event.target.value;
-      this.filters = filtersCopy;
+    let filtersCopy = [...this.filters];
+    filtersCopy[index].logic = event.target.value;
+    this.filters = filtersCopy;
   }
 
   // Update the filter type
   @action
   updateFilterType(event, index) {
-      let filtersCopy = [...this.filters];
-      filtersCopy[index].type = event.target.value;
-      this.filters = filtersCopy;
+    let filtersCopy = [...this.filters];
+    filtersCopy[index].type = event.target.value;
+    this.filters = filtersCopy;
   }
 
   @action
   updateQueryType(event, index) {
-      let filtersCopy = [...this.filters];
-      filtersCopy[index].filterType = event.target.value;
-      this.filters = filtersCopy;
+    let filtersCopy = [...this.filters];
+    filtersCopy[index].filterType = event.target.value;
+    this.filters = filtersCopy;
   }
 
   // Update the filter value
   @action
   updateFilterValue(event, index) {
-      let filtersCopy = [...this.filters];
-      filtersCopy[index].value = event.target.value.toLowerCase();
-      this.filters = filtersCopy;
+    let filtersCopy = [...this.filters];
+    filtersCopy[index].value = event.target.value.toLowerCase();
+    this.filters = filtersCopy;
   }
 
   // Remove a filter based on its index
@@ -54,17 +57,16 @@ export default class LogsController extends Controller {
   }
 
   @action
-  async searchLogs(flag=false) {
-    
-    if(this.page == "" || this.page == 0) this.page = 1
-    if(this.pageSize == "" || this.pageSize == 0) this.pageSize = 10
+  async searchLogs(flag = false) {
+    if (this.page == '' || this.page == 0) this.page = 1;
+    if (this.pageSize == '' || this.pageSize == 0) this.pageSize = 10;
 
-    if(flag) this.page = 1
+    if (flag) this.page = 1;
     const payload = {
       page: this.page,
       pageSize: this.pageSize,
-      sortColumn : this.sortColumn,
-      filters: this.filters // Send the filters array as part of the payload
+      sortColumn: this.sortColumn,
+      filters: this.filters, // Send the filters array as part of the payload
     };
 
     try {
@@ -73,7 +75,7 @@ export default class LogsController extends Controller {
         headers: {
           'Content-Type': 'application/json', // Set content type to JSON
         },
-        body: JSON.stringify(payload) // Convert the payload to JSON string
+        body: JSON.stringify(payload), // Convert the payload to JSON string
       });
 
       // Check if the response is okay
@@ -85,13 +87,12 @@ export default class LogsController extends Controller {
 
       data.logs = data.logs.map((log, index) => {
         return {
-          ...log, 
-          SNO: ((this.page - 1) * this.pageSize) + index + 1 
+          ...log,
+          SNO: (this.page - 1) * this.pageSize + index + 1,
         };
       });
 
       console.log(data);
-      
 
       // Handle the response (e.g., update the model with new logs)
       this.set('model', data);
@@ -104,7 +105,7 @@ export default class LogsController extends Controller {
   previousPage() {
     if (this.page > 1) {
       this.decrementProperty('page');
-      this.searchLogs()
+      this.searchLogs();
     }
   }
 
@@ -112,7 +113,7 @@ export default class LogsController extends Controller {
   nextPage() {
     if (this.page < this.model.totalPages) {
       this.incrementProperty('page');
-      this.searchLogs()
+      this.searchLogs();
     }
   }
 
@@ -120,7 +121,7 @@ export default class LogsController extends Controller {
   updatePageNumber(event) {
     if (this.page < this.model.totalPages) {
       console.log(event);
-      
+
       this.page = event.target.value;
       this.searchLogs();
     }
@@ -128,7 +129,7 @@ export default class LogsController extends Controller {
 
   @action
   setSortColumn(column) {
-      this.sortColumn = column;
-      this.searchLogs(true);
+    this.sortColumn = column;
+    this.searchLogs(true);
   }
 }

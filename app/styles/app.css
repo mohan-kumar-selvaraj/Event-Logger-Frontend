@@ -84,7 +84,7 @@ tr:nth-child(even) {
 .center-screen {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   width: 100%;
 }
 
@@ -96,7 +96,7 @@ tr:nth-child(even) {
 .right-screen {
   display: flex;
   justify-content: end;
-  align-items: center; 
+  align-items: center;
   flex: 1;
   padding: 0 20px;
 }
