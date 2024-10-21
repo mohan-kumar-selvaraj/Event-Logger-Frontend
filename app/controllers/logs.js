@@ -86,7 +86,7 @@ export default class LogsController extends Controller {
       data.logs = data.logs.map((log, index) => {
         return {
           ...log, 
-          SNO: (this.page * this.pageSize) + index + 1 
+          SNO: ((this.page - 1) * this.pageSize) + index + 1 
         };
       });
 
