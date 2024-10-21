@@ -7,11 +7,11 @@
             @value={{filter.value}} 
             @updateFilterLogic={{this.updateFilterLogic}} 
             @updateType={{this.updateFilterType}} 
+            @updateQueryType={{this.updateQueryType}} 
             @updateValue={{this.updateFilterValue}} 
             @index={{index}} 
             @removeFilter={{this.removeFilter}} 
         />
-        <br>
     {{/each}}
     
     <button class="button" type="button" {{on "click" this.addFilter}}>Add Filter</button>
@@ -52,7 +52,6 @@
             <th>Message <img src="/assets/swap.png" class="swap" alt="Sort Message" {{on "click" (fn this.setSortColumn 'message')}} /></th>
             <th>Severity <img src="/assets/swap.png" class="swap" alt="Sort Severity" {{on "click" (fn this.setSortColumn 'severity')}} /></th>
             <th>TimeStamp <img src="/assets/swap.png" class="swap" alt="Sort TimeStamp" {{on "click" (fn this.setSortColumn 'timeStamp')}} /></th>
-            <th>LogName <img src="/assets/swap.png" class="swap" alt="Sort LogName" {{on "click" (fn this.setSortColumn 'logName')}} /></th>
             <th>UserName <img src="/assets/swap.png" class="swap" alt="Sort UserName" {{on "click" (fn this.setSortColumn 'userName')}} /></th>
             <th>DeviceName <img src="/assets/swap.png" class="swap" alt="Sort DeviceName" {{on "click" (fn this.setSortColumn 'deviceName')}} /></th>
         </tr>
@@ -65,9 +64,8 @@
             <td>{{log.message}}</td>
             <td>{{log.severity}}</td>
             <td>{{log.timeStamp}}</td>
-            <td>{{log.logName}}</td>
             <td>{{log.userName}}</td>
-            <td>{{log.logName}}</td>
+            <td>{{log.deviceName}}</td>
         </tr>
         {{/each}}
     </tbody>

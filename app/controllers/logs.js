@@ -8,12 +8,12 @@ export default class LogsController extends Controller {
   pageSize = 10; // Default page size
   sortColumn = "";
 
-  @tracked filters = [{ type: '', value: '', logic : '' }]; // Initial filter array
+  @tracked filters = [{ type: '', value: '', logic : '', filterType : '' }]; // Initial filter array
 
   // Add a new empty filter
   @action
   addFilter() {
-      this.filters = [...this.filters, { type: '', value: '', logic : '' }];
+      this.filters = [...this.filters, { type: '', value: '', logic : '', filterType : '' }];
   }
 
   // Update the filter type
@@ -32,11 +32,18 @@ export default class LogsController extends Controller {
       this.filters = filtersCopy;
   }
 
+  @action
+  updateQueryType(event, index) {
+      let filtersCopy = [...this.filters];
+      filtersCopy[index].filterType = event.target.value;
+      this.filters = filtersCopy;
+  }
+
   // Update the filter value
   @action
   updateFilterValue(event, index) {
       let filtersCopy = [...this.filters];
-      filtersCopy[index].value = event.target.value;
+      filtersCopy[index].value = event.target.value.toLowerCase();
       this.filters = filtersCopy;
   }
 

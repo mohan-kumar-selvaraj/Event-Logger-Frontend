@@ -2,16 +2,25 @@
 <div>
     <select id="filterLogic" {{on "change" this.updateFilterLogic}}>
       <option value="" selected disabled>Select Logic</option>
-      <option value="AND" >AND</option>
+      <option value="AND">AND</option>
       <option value="OR" >OR</option>
     </select>
-  {{!-- <label for="searchType">Filter by: </label> --}}
+
   <select id="searchType" {{on "change" this.updateType}}>
     <option value="" selected disabled>Select option</option>
     <option value="EventID">Event Code</option>
     <option value="SourceName">Source Name</option>
     <option value="Message">Message</option>
     <option value="Severity">Severity</option>
+  </select>
+
+  <select id="filterType" {{on "change" this.updateQueryType}} >
+    <option value="Contains" selected>contains</option>
+    <option value="NotContains">not contains</option>
+    <option value="Equals">equals</option>
+    <option value="NotEquals">not equals</option>
+    <option value="StartsWith">starts with</option>
+    <option value="EndsWith">ends with</option>
   </select>
 
   <input id="searchValue" type="text" placeholder="Enter value" {{on "input" this.updateValue}} />

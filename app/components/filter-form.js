@@ -15,6 +15,11 @@ export default class FilterFormComponent extends Component {
         this.args.updateType(event, this.args.index); // Pass index to update the correct filter
     }
 
+    @action
+    updateQueryType(event) {
+        this.args.updateQueryType(event, this.args.index); // Pass index to update the correct filter
+    }
+
     // Handle value update and pass it to the parent component (LogsController)
     @action
     updateValue(event) {
