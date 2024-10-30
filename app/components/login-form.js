@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service'; // Correct import for router
 
 export default class LoginFormComponent extends Component {
   @service router; // Ensure this is correctly injected
+  @service session;
 
   @tracked email = '';
   @tracked password = '';
@@ -29,45 +30,11 @@ export default class LoginFormComponent extends Component {
       alert('Password cannot be empty!!');
       return;
     }
-
-    const url = '/EventLogJNI/checkuser';
-
-    const bodyData = {
-      email: this.email,
-      password: this.password,
-    };
-
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Important for sending and receiving cookies
-        body: JSON.stringify(bodyData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const jsonResponse = await response.json();
-      console.log('Success:', jsonResponse);
-
-      // Check if user is authenticated based on the backend response
-      if (jsonResponse.authenticated === true) {
-        // Redirect to the logs route
-        this.router.replaceWith('logs');
-      } else if (jsonResponse.passwordMismatch) {
-        alert('Password mismatch!!');
-        return;
-      } else {
-        alert('User not found!! Create an account!!');
-        return;
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Auhentication Failed!!');
+      await this.session.authenticate(this.email, this.password);
+      this.router.replaceWith('logs');
+    } catch(error) {
+      alert(error);
     }
 
     // Clear the form

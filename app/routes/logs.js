@@ -4,18 +4,14 @@ import { inject as service } from '@ember/service';
 
 export default class LogsRoute extends Route {
   @service router;
+  @service session;
 
   async beforeModel() {
+    console.log("BeforeModel called");
+    
     try {
-      let response = await fetch('/EventLogJNI/auth-check', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      let authStatus = await response.json();
-
-      if (!authStatus.isAuthenticated) {
-        alert('Session Timeout');
+      if(!this.session.isAuthenticated){
+        alert('Session Expired');
         this.router.replaceWith('login');
       }
     } catch (error) {
@@ -23,11 +19,6 @@ export default class LogsRoute extends Route {
       this.router.replaceWith('login');
     }
   }
-
-  // queryParams = {
-  //   page: { refreshModel: true },
-  //   pageSize: { refreshModel: true },
-  // };
 
   async model(params) {
     let page = params.page || 1;

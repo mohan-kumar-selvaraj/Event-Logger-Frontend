@@ -55,6 +55,7 @@
     "ember-page-title": "^8.2.3",
     "ember-qunit": "^8.1.0",
     "ember-resolver": "^11.0.1",
+    "ember-simple-auth": "^6.1.0",
     "ember-source": "~5.11.0",
     "ember-template-lint": "^5.13.0",
     "ember-welcome-page": "^7.0.2",
