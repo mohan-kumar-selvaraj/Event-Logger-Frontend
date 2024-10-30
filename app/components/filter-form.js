@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class FilterFormComponent extends Component {
+  get index() {
+    return this.args.index;
+  }
+
   @action
   updateFilterLogic(event) {
     this.args.updateFilterLogic(event, this.args.index); // Pass index to update the correct filter

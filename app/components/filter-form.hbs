@@ -1,10 +1,15 @@
-{{!-- Search Form --}}
 <div>
+  {{#if this.index}}
     <select id="filterLogic" {{on "change" this.updateFilterLogic}}>
       <option value="" selected disabled>Select Logic</option>
       <option value="AND">AND</option>
       <option value="OR" >OR</option>
     </select>
+  {{else}}
+    <select id="filterLogic" {{on "change" this.updateFilterLogic}}>
+      <option value="" selected disabled>Select Logic</option>
+    </select>
+  {{/if}}
 
   <select id="searchType" {{on "change" this.updateType}}>
     <option value="" selected disabled>Select option</option>
